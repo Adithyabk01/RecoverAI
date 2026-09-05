@@ -102,19 +102,19 @@ Only policy-approved actions (`policy.allowed === true` AND `policy.status === '
 *All values below are calculated strictly from the complete 1,000-record dataset:*
 
 - **Total Payment Records**: 1,000
-- **Total Payment Volume**: ₹1,51,76,823 (₹1.52 Cr)
-- **Failed Payments**: 301 records (`₹44,98,900` value)
-- **Failure Rate**: 30.1%
-- **Revenue at Risk**: ₹45.46 Lakh
-- **Demo Recovery Potential**: ₹27.87 Lakh
+- **Total Payment Volume**: ₹1,16,46,003 (₹1.16 Cr)
+- **Failed Payments**: 245 records (`₹28,28,570` value)
+- **Failure Rate**: 24.5%
+- **Revenue at Risk**: ₹33,49,654 (₹33.50 Lakh)
+- **Demo Recovery Potential**: ₹19,21,019 (₹19.21 Lakh)
 - **Recovery Recommendations**: 336 (104 Retry, 105 Customer Action, 123 Escalate, 4 Stop)
-- **Policy Results**: 109 ALLOWED / 104 BLOCKED / 123 REVIEW
-- **Human Review Required**: 123
+- **Policy Results**: 322 ALLOWED / 14 BLOCKED / 137 REVIEW
+- **Human Review Required**: 137
 - **Batch Recovery Simulation**:
-  - 109 policy-authorized recovery workflows
-  - 84 successful simulated retries
-  - 20 failed simulated retries
-  - ₹7.04 Lakh DEMO VALUE simulated recovered
+  - 199 policy-cleared simulation workflows
+  - 196 successful simulated actions
+  - 3 failed simulated retries
+  - ₹3,97,117 (₹3.97 Lakh) DEMO VALUE simulated recovered
 
 ---
 
