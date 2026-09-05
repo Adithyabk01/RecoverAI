@@ -1,0 +1,43 @@
+# Dependencies & Build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor & IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+
+# Antigravity/Gemini internal files & temporary artifacts
+.gemini/
+.agents/
+.brain/
+scratch/
+recordings/
+screenshots/
+*.mp4
+*.webm
