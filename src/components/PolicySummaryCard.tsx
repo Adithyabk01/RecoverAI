@@ -1,6 +1,6 @@
 import React from 'react';
 import type { DashboardMetrics } from '../types/payment';
-import { ShieldCheck, ShieldAlert, UserCheck, CheckCircle2, XCircle, Info } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, UserCheck, CheckCircle2, XCircle, Info, AlertTriangle } from 'lucide-react';
 
 interface PolicySummaryCardProps {
   metrics: DashboardMetrics;
@@ -8,9 +8,9 @@ interface PolicySummaryCardProps {
 
 export const PolicySummaryCard: React.FC<PolicySummaryCardProps> = ({ metrics }) => {
   const { policySummary } = metrics;
-  const { allowedCount, blockedCount, humanReviewCount, actionBreakdown } = policySummary;
+  const { allowedCount, blockedCount, reviewCount, humanReviewCount, actionBreakdown } = policySummary;
 
-  const totalEvaluated = allowedCount + blockedCount;
+  const totalEvaluated = allowedCount + blockedCount + reviewCount;
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg space-y-4">
@@ -41,8 +41,8 @@ export const PolicySummaryCard: React.FC<PolicySummaryCardProps> = ({ metrics })
         </div>
       </div>
 
-      {/* Top 3 Metric Summary Highlights */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
+      {/* Top 4 Metric Summary Highlights */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
         
         {/* 1. Allowed Recommendations */}
         <div className="bg-slate-950/70 p-4 rounded-xl border border-emerald-500/30 flex items-center justify-between">
@@ -84,11 +84,31 @@ export const PolicySummaryCard: React.FC<PolicySummaryCardProps> = ({ metrics })
           </div>
         </div>
 
-        {/* 3. Human Review Required */}
+        {/* 3. Review Status */}
         <div className="bg-slate-950/70 p-4 rounded-xl border border-amber-500/30 flex items-center justify-between">
           <div>
             <span className="text-xs font-bold text-amber-400 uppercase flex items-center gap-1.5">
-              <UserCheck className="h-4 w-4" /> HUMAN REVIEW REQUIRED
+              <AlertTriangle className="h-4 w-4" /> REVIEW
+            </span>
+            <div className="text-2xl font-extrabold text-white mt-1">
+              {reviewCount} <span className="text-xs text-slate-400 font-normal">decisions</span>
+            </div>
+            <p className="text-[11px] text-slate-400 mt-0.5">
+              Assigned REVIEW status
+            </p>
+          </div>
+          <div className="text-right">
+            <span className="text-lg font-black text-amber-400">
+              {totalEvaluated > 0 ? Math.round((reviewCount / totalEvaluated) * 100) : 0}%
+            </span>
+          </div>
+        </div>
+
+        {/* 4. Human Review Required */}
+        <div className="bg-slate-950/70 p-4 rounded-xl border border-amber-500/30 flex items-center justify-between">
+          <div>
+            <span className="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5">
+              <UserCheck className="h-4 w-4" /> HUMAN REVIEW
             </span>
             <div className="text-2xl font-extrabold text-white mt-1">
               {humanReviewCount} <span className="text-xs text-slate-400 font-normal">cases</span>
@@ -98,7 +118,7 @@ export const PolicySummaryCard: React.FC<PolicySummaryCardProps> = ({ metrics })
             </p>
           </div>
           <div className="text-right">
-            <span className="text-lg font-black text-amber-400">
+            <span className="text-lg font-black text-amber-300">
               {totalEvaluated > 0 ? Math.round((humanReviewCount / totalEvaluated) * 100) : 0}%
             </span>
           </div>

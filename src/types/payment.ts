@@ -207,6 +207,7 @@ export interface DashboardMetrics {
   policySummary: {
     allowedCount: number;
     blockedCount: number;
+    reviewCount: number;
     humanReviewCount: number;
     actionBreakdown: {
       retryPayment: ActionPolicyBreakdown;

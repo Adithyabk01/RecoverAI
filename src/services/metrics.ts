@@ -46,6 +46,7 @@ export function calculateDashboardMetrics(records: PaymentRecord[]): DashboardMe
   const policySummary = {
     allowedCount: 0,
     blockedCount: 0,
+    reviewCount: 0,
     humanReviewCount: 0,
     actionBreakdown: {
       retryPayment: { allowed: 0, blocked: 0 },
@@ -158,11 +159,13 @@ export function calculateDashboardMetrics(records: PaymentRecord[]): DashboardMe
           break;
       }
 
-      // Stage 4 Policy Summary Aggregates
-      if (policyDecision.allowed) {
+      // Stage 4 Policy Summary Aggregates (Strict 3-way status breakdown)
+      if (policyDecision.status === 'ALLOWED') {
         policySummary.allowedCount++;
-      } else {
+      } else if (policyDecision.status === 'BLOCKED') {
         policySummary.blockedCount++;
+      } else if (policyDecision.status === 'REVIEW') {
+        policySummary.reviewCount++;
       }
 
       if (policyDecision.requiresHumanReview) {
@@ -172,19 +175,19 @@ export function calculateDashboardMetrics(records: PaymentRecord[]): DashboardMe
       // Action Breakdown in Policy Gate
       switch (aiDecision.action) {
         case 'RETRY_PAYMENT':
-          if (policyDecision.allowed) policySummary.actionBreakdown.retryPayment.allowed++;
+          if (policyDecision.status === 'ALLOWED') policySummary.actionBreakdown.retryPayment.allowed++;
           else policySummary.actionBreakdown.retryPayment.blocked++;
           break;
         case 'REQUEST_CUSTOMER_ACTION':
-          if (policyDecision.allowed) policySummary.actionBreakdown.requestCustomerAction.allowed++;
+          if (policyDecision.status === 'ALLOWED') policySummary.actionBreakdown.requestCustomerAction.allowed++;
           else policySummary.actionBreakdown.requestCustomerAction.blocked++;
           break;
         case 'ESCALATE':
-          if (policyDecision.allowed) policySummary.actionBreakdown.escalate.allowed++;
+          if (policyDecision.status === 'ALLOWED') policySummary.actionBreakdown.escalate.allowed++;
           else policySummary.actionBreakdown.escalate.blocked++;
           break;
         case 'STOP':
-          if (policyDecision.allowed) policySummary.actionBreakdown.stop.allowed++;
+          if (policyDecision.status === 'ALLOWED') policySummary.actionBreakdown.stop.allowed++;
           else policySummary.actionBreakdown.stop.blocked++;
           break;
       }
