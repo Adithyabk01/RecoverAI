@@ -86,6 +86,19 @@ export class PolicySafetyEngine {
       };
     }
 
+    // Rule 5b — Retry Payment Permitted (amount <= ₹25,000)
+    if (action === 'RETRY_PAYMENT') {
+      return {
+        allowed: true,
+        status: 'ALLOWED',
+        action,
+        reason: `Standard automated retry permitted by safety policy for transactions <= ₹25,000 (${amountStr}).`,
+        rulesTriggered: ['RETRY_PAYMENT_PERMITTED'],
+        riskLevel: risk.riskLevel,
+        requiresHumanReview: false,
+      };
+    }
+
     // Rule 6 — Customer Action Permitted (REQUEST_CUSTOMER_ACTION approved)
     if (action === 'REQUEST_CUSTOMER_ACTION') {
       return {
